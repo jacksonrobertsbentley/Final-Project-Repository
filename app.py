@@ -7,6 +7,7 @@ import streamlit as st
 points = pd.read_excel("Fantasy Points per week.xlsm", header=0, index_col=0)
 matchups = pd.read_excel("Fantasy Matchups.xlsm",header=0,index_col=0)
 real_wins = pd.read_excel("Fantasy Win Totals.xlsx",header=0,index_col=0)
+simulation_times = st.sidebar.slider("How many times would you like to simulate the season?",1,1000,100,1)
 
 points.T.boxplot(column=None, by=None)
 plt.title("Distribution of Scores for Each Owner")
@@ -23,7 +24,7 @@ player_wins_df = pd.DataFrame()
 for player in players_list:
     my_wins = []
     my_losses = []
-    for sim in range (100):
+    for sim in range (simulation_times):
         winners = []
         losers = []
         np.random.seed(sim + 5)
@@ -46,7 +47,7 @@ for player in players_list:
         my_wins.append(winners.count(player))
         my_losses.append(losers.count(player))
     player_wins_df[player]=my_wins
-    plt.plot(range(1,101),my_wins,'-o')
+    plt.plot(range(1,simulation_times+1),my_wins,'-o')
     plt.title('Number of Wins per Simulation\nFor ' + player + '\'s Fantasy Football Team')
     plt.xlabel('Simulation Number')
     plt.ylabel('Wins')
@@ -66,6 +67,6 @@ for player in players_list:
     rw_percentile = wins_rw[wins_rw<=rw].count()
     z = (rw-wins_rw.mean())/wins_rw.std()
     z_scores[player] = z
-    percentiles[player] = rw_percentile/100
+    percentiles[player] = rw_percentile/simulation_times
 
 st.write("Percentiles:",percentiles, "\n\nz-scores:", z_scores)
