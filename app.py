@@ -4,6 +4,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import streamlit as st
 
+st.write("Here is the link to the project repository where the report can also be found: https://github.com/jacksonrobertsbentley/Final-Project-Repository")
+
 points = pd.read_excel("Fantasy Points per week.xlsm", header=0, index_col=0)
 matchups = pd.read_excel("Fantasy Matchups.xlsm",header=0,index_col=0)
 real_wins = pd.read_excel("Fantasy Win Totals.xlsx",header=0,index_col=0)
