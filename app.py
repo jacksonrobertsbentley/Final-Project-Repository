@@ -70,3 +70,4 @@ for player in players_list:
     percentiles[player] = rw_percentile/simulation_times
 
 st.write("Percentiles:",percentiles, "\n\nz-scores:", z_scores)
+st.write(pd.show_versions())
